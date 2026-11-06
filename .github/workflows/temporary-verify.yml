@@ -1,0 +1,36 @@
+name: Temporary Verify
+
+on:
+  push:
+    branches:
+      - tmp/verify-mcp-add-8ca436b
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks and types
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+      - name: Check code
+        run: pnpm check
+      - name: Check types
+        run: pnpm check:types
+
+  test:
+    name: Full test suite with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+      - name: Run full test suite
+        run: pnpm run test --bail=1 --coverage
+        env:
+          CI: true
