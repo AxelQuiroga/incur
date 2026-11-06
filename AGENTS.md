@@ -37,6 +37,7 @@
 ## Testing Conventions
 
 - **Snapshot tests for deterministic output** — prefer `toMatchInlineSnapshot()` for deterministic string outputs (TOON, JSON, etc.). If output is mostly deterministic with a few dynamic properties (e.g. `duration`), extract and assert those separately, then snapshot the rest.
+- **Validate built-in flag values before side effects** — built-in subcommands with custom argv parsing must reject missing, empty, or option-shaped values before registration or configuration writes, with CLI-level regression tests for accepted and rejected forms.
 
 ## Binary Build Conventions
 
