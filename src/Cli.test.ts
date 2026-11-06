@@ -3548,6 +3548,7 @@ describe('built-in commands', () => {
     ['--command'],
     ['-c'],
     ['--command', '--agent', 'amp'],
+    ['--agent', '--command', 'amp'],
     ['--agent='],
     ['--command='],
     ['-c='],
