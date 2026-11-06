@@ -1,0 +1,33 @@
+name: MCP add option validation
+
+on:
+  push:
+    branches:
+      - fix/mcp-add-option-validation
+
+concurrency:
+  group: mcp-add-option-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Install project dependencies
+        run: pnpm install
+
+      - name: Run focused MCP add tests
+        run: pnpm exec vitest run src/Cli.test.ts -t "mcp add"
+
+      - name: Run complete test suite
+        run: pnpm exec vitest run
+
+      - name: Check TypeScript
+        run: pnpm check:types
