@@ -1320,7 +1320,10 @@ async function serveImpl(
     let command = options.mcp?.command
     const agents: string[] = [...(options.mcp?.agents ?? [])]
     const readValue = (flag: string, value: string | undefined) => {
-      if (value === undefined || value.trim().length === 0 || value.startsWith('-'))
+      if (value === undefined ||
+        value.trim().length === 0 ||
+        value.startsWith('--') ||
+        (value.startsWith('-') && value.length > 1))
         throw new ParseError({ message: `Missing value for flag: ${flag}` })
       return value
     }
