@@ -1350,7 +1350,7 @@ async function serveImpl(
       writeln(
         Formatter.format(
           {
-            code: 'INVALID_MCP_ADD_OPTIONS',
+            code: 'UNKNOWN',
             message: err instanceof Error ? err.message : String(err),
           },
           formatExplicit ? formatFlag : 'toon',
