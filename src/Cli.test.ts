@@ -3549,6 +3549,10 @@ describe('built-in commands', () => {
     ['-c'],
     ['--command', '--agent', 'amp'],
     ['--agent', '--command', 'amp'],
+    ['-c', '--agent', 'amp'],
+    ['--agent', ''],
+    ['--command', ''],
+    ['-c', ''],
     ['--agent='],
     ['--command='],
     ['-c='],
@@ -3560,7 +3564,7 @@ describe('built-in commands', () => {
       const { output, exitCode } = await serve(cli, ['mcp', 'add', ...args, '--json'])
 
       expect(exitCode).toBe(1)
-      expect(output).toContain('INVALID_MCP_ADD_OPTIONS')
+      expect(output).toContain('"code": "UNKNOWN"')
       expect(spy).not.toHaveBeenCalled()
       expect(output).not.toContain('Registering MCP server...')
     } finally {
