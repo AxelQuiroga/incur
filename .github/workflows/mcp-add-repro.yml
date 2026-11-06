@@ -1,4 +1,4 @@
-name: Reproduce mcp add missing-value parsing
+name: Validate mcp add option parsing
 
 on:
   push:
@@ -10,9 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  reproduce:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -24,5 +24,9 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run isolated CLI reproduction
-        run: pnpm exec tsx scripts/repro-mcp-add.mjs
+      - name: Run mcp add regression tests
+        run: pnpm exec vitest run src/Cli.test.ts -t "mcp add"
+      - name: Run complete test suite
+        run: pnpm exec vitest run
+      - name: Check TypeScript types
+        run: pnpm check:types
