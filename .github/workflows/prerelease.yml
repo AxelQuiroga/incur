@@ -19,6 +19,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Run focused MCP add tests
+        run: pnpm exec vitest run src/Cli.test.ts -t "mcp add"
+
+      - name: Run complete test suite
+        run: pnpm exec vitest run
+
+      - name: Check TypeScript
+        run: pnpm check:types
+
       - name: Prerelease
         run: |
           pnpm run build
